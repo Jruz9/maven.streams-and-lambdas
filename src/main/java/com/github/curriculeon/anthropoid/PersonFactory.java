@@ -3,6 +3,9 @@ package com.github.curriculeon.anthropoid;
 import com.github.curriculeon.tools.RandomUtils;
 import com.github.curriculeon.tools.StringUtils;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -38,7 +41,8 @@ public final class PersonFactory {
      * @return - ArrayList of Person objects
      */ // TODO
     public List<Person> createPersonList(int listSize) {
-        return null;
+        List<Person> personList = new ArrayList<>(listSize);
+        return  personList;
     }
 
 
@@ -47,7 +51,8 @@ public final class PersonFactory {
      * @return - Array of Person objects
      */ // TODO
     public Person[] createPersonArray(int arrayLength) {
-        return null;
+        Person[] personArray = new Person[arrayLength];
+        return personArray;
     }
 
 
@@ -58,6 +63,9 @@ public final class PersonFactory {
      * @return - Stream representation of collection of Person objects
      */ // TODO
     public Stream<Person> createPersonStream(int streamCount) {
-        return null;
+        Person[] personArray = new Person[streamCount];
+        Stream<Person> personStream= Arrays.stream(personArray);
+        return personStream;
+        }
     }
-}
+
