@@ -4,10 +4,8 @@ import com.github.curriculeon.tools.logging.LoggerHandler;
 import com.github.curriculeon.tools.logging.LoggerWarehouse;
 import com.github.curriculeon.tools.ReflectionUtils;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -35,7 +33,9 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return list of names of Person objects
      */ // TODO
     public List<String> getNames() {
-        return null;
+        List<String> personList =new ArrayList<>();
+        people.forEach(person -> personList.add(person.getName()));
+        return personList;
     }
 
 
@@ -43,7 +43,12 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return list of uniquely named Person objects
      */ //TODO
     public Stream<Person> getUniquelyNamedPeople() {
-        return null;
+       List<Person > personList=new ArrayList<>();
+       List<String> nameList= getNames();
+       people.stream()
+               .filter(person -> Collections.frequency(nameList,person.getName())==1)
+               .forEach(personList::add);
+       return personList.stream();
     }
 
 
@@ -52,7 +57,11 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return a Stream of respective
      */ //TODO
     public Stream<Person> getUniquelyNamedPeopleStartingWith(Character character) {
-        return null;
+        List<Person> personList = new ArrayList<>();
+        people.stream()
+                .filter(person -> person.getName().charAt(0)==character)    // the filter will find what you want and get rid of dulplicates
+                .forEach(personList::add);  // for each it will add it to the personlist defined below (add is part of the arraylist class)
+        return personList.stream();     //converts the arraylist to streams
     }
 
     /**
@@ -60,14 +69,20 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return a Stream of respective
      */ //TODO
     public Stream<Person> getFirstNUniquelyNamedPeople(int n) {
-        return null;
+        List<Person> personList = new ArrayList<>();
+        getUniquelyNamedPeople().limit(n)
+                .forEach(personList::add);
+        return personList.stream();
     }
 
     /**
      * @return a mapping of Person Id to the respective Person name
      */ // TODO
     public Map<Long, String> getIdToNameMap() {
-        return null;
+        Map<Long,String> personMap= new HashMap<>();
+        people.stream()
+                .map(person -> personMap.put(person.getPersonalId(),person.getName()));
+        return personMap;
     }
 
 
@@ -75,7 +90,10 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return Stream of Stream of Aliases
      */ // TODO
     public Stream<Stream<String>> getNestedAliases() {
-        return null;
+        List<Stream<String>> nestedList= new ArrayList<>();
+        people.forEach(person -> nestedList.add(Arrays.stream(person.getAliases()).sequential()));
+
+        return nestedList.stream();
     }
 
 
@@ -83,7 +101,10 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return Stream of all Aliases
      */ // TODO
     public Stream<String> getAllAliases() {
-        return null;
+        List<String> personList = new ArrayList<>();
+        getNestedAliases().forEach(aliasList -> aliasList.forEach(personList::add));
+
+        return personList.stream();
     }
 
     // DO NOT MODIFY

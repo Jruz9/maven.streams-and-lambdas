@@ -1,5 +1,9 @@
 package com.github.curriculeon;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -12,7 +16,13 @@ public class StreamMap {
      * @return - a Stream of single characters
      */ //TODO
     public static Stream<String> letters(String someWord) {
-        \]
+//        String[] stringStream=someWord.split("") ;
+//        return  Stream.of(stringStream);
+
+        //or
+
+        return  Arrays.stream(someWord.split(""))
+                .sequential();
     }
 
     /**
@@ -20,7 +30,9 @@ public class StreamMap {
      * @return - a Stream of several Streams of single characters
      */ //TODO
     public static Stream<Stream<String>> wordsMap(String... someWords) {
-        return null;
+       // List<Stream<String>> nestedList = new ArrayList<>();
+        return Arrays.stream(someWords).map(StreamMap::letters);
+
     }
 
     /**
@@ -28,6 +40,6 @@ public class StreamMap {
      * @return - a Stream of several Streams of single characters
      */ //TODO
     public static Stream<String> wordsFlatMap(String... stringArray) {
-        return null;
+        return Arrays.stream(stringArray).flatMap(StreamMap::letters);
     }
 }
