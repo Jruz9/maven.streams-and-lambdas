@@ -3,6 +3,7 @@ package com.github.curriculeon.conversions;
 import com.github.curriculeon.anthropoid.Person;
 import com.github.curriculeon.anthropoid.PersonFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,16 +26,19 @@ public final class StreamConverter extends PersonConversionAgent<Stream<Person>>
 
     // TODO
     public List<Person> toList() {
-        return null;
+        List<Person>personList1 = new ArrayList<>();
+        personList.stream().
+                forEach(personList1::add);
+        return personList1;
     }
 
     // TODO
     public Stream<Person> toStream() {
-        return null;
+        return personList.stream();
     }
 
     // TODO
     public Person[] toArray() {
-        return null;
+        return this.personList.toArray(new Person[0]);
     }
 }
